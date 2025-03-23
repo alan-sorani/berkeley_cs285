@@ -1,0 +1,142 @@
+\documentclass[10pt]{article}
+
+%---GEOMETRY
+
+\usepackage{geometry}
+   \geometry{verbose,tmargin=0.75in,bmargin=0.75in,%
+     lmargin=0.7in,rmargin=0.4in,headheight=0.25in,%
+     headsep=0.2in,footskip=0.4in}%
+
+%---COMMENTS---
+\usepackage{comment}
+
+%---CODE OUTPUT---
+\usepackage{listings}
+\lstset
+{ %Formatting for code in appendix
+    language=Matlab,
+    basicstyle=\footnotesize,
+    numbers=left,
+    stepnumber=1,
+    showstringspaces=false,
+    tabsize=4,
+    breaklines=true,
+    breakatwhitespace=false,
+    escapeinside={(*}{*)}
+}
+
+\newcommand{\codeword}[1]{\texttt{#1}}
+
+%---HYPERLINKS---
+
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all     %set to all if you want both sections and subsections linked
+}
+
+\begin{comment}
+    citecolor=stycitecolor,
+    filecolor=styfilecolor,
+    linkcolor=stylinkcolor,
+    urlcolor=styurlcolor
+\end{comment}
+
+%---MATHS PACKAGES---
+
+\usepackage{math}
+
+%---THEOREMS
+
+\usepackage{altthms}
+
+\theoremstyle{definition}
+
+\renewtheorem{exercise}{Exercise}[section]
+\renewcommand*{\theexercise}{\thesection-\arabic{exercise}}
+
+%---INDEX---
+
+\usepackage{imakeidx}
+\makeindex
+
+%---BIBLIOGRAPHY---
+
+\usepackage[backend=biber, style=alphabetic]{biblatex}
+\addbibresource{bibliography.bib}
+
+%---ENUMERATION---
+
+\usepackage{enumitem}
+
+%---TITLE---
+
+\title{CS285: Deep Reinforcement Learning \\ Assignment 1 \\ Written Report}
+\author{Alan Sorani}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Analysis}
+
+Consider the problem of imitation learning within a discrete MDP with horizon T and an expert policy $\pi^*$. We gather expert demonstrations from $\pi^*$ and fit an imitation policy $\pi_\theta$ to these trajectories so that
+\begin{align*}
+\mbb{E}_{p_{\pi^*}\prs{s}} \brs{ \pi_\theta \prs{a \neq \pi^*\prs{s} \, \middle| \, s} } = \frac{1}{T} \sum_{t=1}^T \mbb{E}_{p_{\pi^*}\prs{s_t}} \brs{ \pi_\theta \prs{a_t \neq \pi^*\prs{s_t} \,\middle|\, s_t} } \leq \eps \text{.}
+\end{align*}
+The notation $p_{\pi}\prs{s_t}$ indicates the state distribution under a policy $\pi$ at time step $t$, while $p_{\pi}\prs{s}$ indicates the state marginal of $\pi$ across time steps, unless indicated otherwise.
+
+\begin{enumerate}
+\item \label{item:error-inequality}
+TODO %TODO
+
+\item
+We have
+\begin{align*}
+J\prs{\pi^*} - J\prs{\pi_{\theta}} &= \sum_{t \in \brs{T}} \mbb{E}_{p_{\pi^*}\prs{s_t}}\brs{r\prs{s_t}} - \mbb{E}_{p_{\pi_{\theta}}\prs{s_t}}\brs{r\prs{s_t}}
+\\&= \sum_{t \in \brs{T}} \prs{\sum_{s_t} p_{\pi^*}\prs{s_t} r\prs{s_t}} - \prs{\sum_{s_t} p_{\pi_{\theta}}\prs{s_t} r\prs{s_t}}
+\\&=
+\sum_{t \in \brs{T}} \sum_{s_t} \prs{p_{\pi^*}\prs{s_t} - p_{\pi_{\theta}}\prs{s_t}} r\prs{s_t} \text{.}
+\end{align*}
+
+\begin{enumerate}[label = (\alph*)]
+\item
+Assuming $r\prs{s_t} = 0$ for all $t < T$, we get that
+\begin{align*}
+J\prs{\pi^*} - J\prs{\pi_{\theta}} = \sum_{s_T} \prs{p_{\pi^*} \prs{s_t} - p_{\pi_\theta}\prs{s_t}} r\prs{s_t} \text{,}
+\end{align*}
+and by the triangle inequality and \Cref{item:error-inequality} we get that
+\begin{align*}
+\abs{J\prs{\pi^*} - J\prs{\pi_{\theta}}} &\leq \sum_{s_T} \abs{p_{\pi^*} \prs{s_T} - p_{\pi_\theta}\prs{s_T}} \abs{r\prs{s_T}}
+\\&\leq R_{\mrm{max}} \sum_{s_T} \abs{p_{\pi^*}\prs{s_T} - p_{\pi_\theta\prs{s_T}}}
+\\&\leq 2 T \eps R_{\mrm{max}} \text{.}
+\end{align*}
+Hence $J\prs{\pi^*} - J\prs{\pi_\theta} = \mrm{O}\prs{T \eps}$.
+
+\item
+Without the assumption on the reward, we get
+\begin{align*}
+\abs{J\prs{\pi^*} - J\prs{\pi_{\theta}}} &\leq \sum_{t \in T} \sum_{s_t} \abs{p_{\pi^*}\prs{s_t} - p_{\pi_\theta}\prs{s_t}} \abs{r\prs{s_t}}
+\\&\leq R_{\mrm{max}} \sum_{t \in T} \sum_{s_t} \abs{p_{\pi^*}\prs{s_t} - p_{\pi_\theta}\prs{s_t}}
+\\&\leq R_{\mrm{max}} \sum_{t \in T} 2 t \epsilon
+\\&= 2 R_{\mrm{max}} \eps \frac{T \prs{T+1}}{2}
+\\&= \mrm{O}\prs{T^2 \eps} \text{,}
+\end{align*}
+as required.
+\end{enumerate}
+
+\end{enumerate}
+
+
+\setcounter{section}{2}
+\section{Behavioral Cloning}
+
+\section{DAgger}
+
+\section{Discussion}
+
+\printbibliography
+\printindex
+
+\end{document}
