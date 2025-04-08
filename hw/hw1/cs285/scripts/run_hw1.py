@@ -84,6 +84,7 @@ def run_training_loop(params):
     ## AGENT
     #############
 
+    # TODO: Implement missing functions in this class.
     actor = MLPPolicySL(
         ac_dim,
         ob_dim,
@@ -128,21 +129,16 @@ def run_training_loop(params):
         else:
             # DAGGER training from sampled data relabeled by expert
             assert params['do_dagger']
-            # DONE: collect `params['batch_size']` transitions
+            # TODO: collect `params['batch_size']` transitions
             # HINT: use utils.sample_trajectories
-            # DONE: implemented missing parts of utils.sample_trajectory
-            paths, envsteps_this_batch = utils.sample_trajectories(
-                    env,
-                    actor,
-                    params['batch_size'],
-                    MAX_VIDEO_LEN
-            )
+            # TODO: implement missing parts of utils.sample_trajectory
+            paths, envsteps_this_batch = utils.sample_trajectories(env, actor, params['batch_size'], MAX_VIDEO_LEN) 
 
             # relabel the collected obs with actions from a provided expert policy
             if params['do_dagger']:
                 print("\nRelabelling collected observations with labels from an expert policy...")
 
-                # DONE: relabel collected obsevations (from our policy) with labels from expert policy
+                # TODO: relabel collected obsevations (from our policy) with labels from expert policy
                 # HINT: query the policy (using the get_action function) with paths[i]["observation"]
                 # and replace paths[i]["action"] with these expert labels
                 for path in paths:
@@ -157,7 +153,7 @@ def run_training_loop(params):
         training_logs = []
         for _ in range(params['num_agent_train_steps_per_iter']):
 
-          # DONE: sample some data from replay_buffer
+          # TODO: sample some data from replay_buffer
           # HINT1: how much data = params['train_batch_size']
           # HINT2: use np.random.permutation to sample random indices
           # HINT3: return corresponding data points from each array (i.e., not different indices from each array)
