@@ -104,7 +104,7 @@ class MLPPolicySL(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
 
             torch.zeros(self.ac_dim, dtype=torch.float32, device=ptu.device)
         )
-        self.log_std.to(ptu.device)
+        self.logstd.to(ptu.device)
         self.optimizer = optim.Adam(
             itertools.chain([self.logstd], self.mean_net.parameters()),
             self.learning_rate
@@ -131,7 +131,7 @@ class MLPPolicySL(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
         # `torch.distributions.Distribution` object. It's up to you!
 
         mean = self.mean_net(observation)
-        return distributions.Normal(mean, self.log_std.exp())
+        return distributions.Normal(mean, self.logstd.exp())
 
     def update(self, observations, actions):
         """
