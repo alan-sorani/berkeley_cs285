@@ -168,6 +168,7 @@ def run_training_loop(params):
         # log/save
         print('\nBeginning logging procedure...')
         if log_video:
+            print("MEOW")
             # save eval rollouts as videos in tensorboard event file
             print('\nCollecting video rollouts eval')
             eval_video_paths = utils.sample_n_trajectories(
