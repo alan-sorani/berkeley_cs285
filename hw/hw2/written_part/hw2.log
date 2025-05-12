@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022/Debian) (preloaded format=xelatex 2025.3.10)  22 APR 2025 16:58
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022/Debian) (preloaded format=xelatex 2025.3.10)  12 MAY 2025 19:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1481,32 +1481,32 @@ Package: enumitem 2019/06/20 v3.9 Customized lists
  (./hw2.aux)
 \openout1 = `hw2.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 78.
-LaTeX Font Info:    ... okay on input line 78.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 78.
-LaTeX Font Info:    ... okay on input line 78.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 78.
-LaTeX Font Info:    ... okay on input line 78.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 78.
-LaTeX Font Info:    ... okay on input line 78.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 78.
-LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 7
-8.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 82.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 8
+2.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2022/07/10 v2.5l Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 78.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 78.
-LaTeX Font Info:    ... okay on input line 78.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 78.
-LaTeX Font Info:    ... okay on input line 78.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 78.
-LaTeX Font Info:    ... okay on input line 78.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 78.
-LaTeX Font Info:    ... okay on input line 78.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 78.
-LaTeX Font Info:    ... okay on input line 78.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 82.
+LaTeX Font Info:    ... okay on input line 82.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -1547,7 +1547,7 @@ Package geometry Warning: The marginal notes overrun the paper.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \c@lstlisting=\count585
-Package hyperref Info: Link coloring ON on input line 78.
+Package hyperref Info: Link coloring ON on input line 82.
 (./hw2.out) (./hw2.out)
 \@outlinefile=\write8
 \openout8 = `hw2.out'.
@@ -1557,7 +1557,7 @@ Package hyperref Info: Link coloring ON on input line 78.
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
 ick labels; missing features). Consider writing \pgfplotsset{compat=1.18} into 
 your preamble.
- on input line 78.
+ on input line 82.
 
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
@@ -1574,40 +1574,48 @@ Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'hw2.bbl' not found.
 
 No file hw2.bbl.
-Package biblatex Info: Reference section=0 on input line 78.
-Package biblatex Info: Reference segment=0 on input line 78.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 81.
+Package biblatex Info: Reference section=0 on input line 82.
+Package biblatex Info: Reference segment=0 on input line 82.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 85.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 81.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 85.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for U+rsfs on input line 81
+LaTeX Font Info:    Trying to load font information for U+rsfs on input line 85
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
 LaTeX Font Info:    Trying to load font information for OMS+rsfs on input line 
-81.
+85.
 
 (/usr/share/texlive/texmf-dist/tex/latex/calrsfs/OMSrsfs.fd) [1
 
 ] [2]
-Overfull \hbox (29.602pt too wide) detected at line 190
+Overfull \hbox (29.602pt too wide) detected at line 194
 []
  []
 
-[3] [4]
+[3] [4] [5] [6]
+File: ./images//Figure_1.png Graphic file (type bmp)
+<./images//Figure_1.png>
+File: ./images//Figure_2.png Graphic file (type bmp)
+<./images//Figure_2.png>
 
-LaTeX Warning: Empty bibliography on input line 278.
 
-[5]
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: Empty bibliography on input line 414.
+
+[7] [8]
 runsystem(makeindex hw2.idx)...executed safely (allowed).
 
  (./hw2.ind) (./hw2.aux)
@@ -1618,12 +1626,12 @@ Package logreq Info: Writing requests to 'hw2.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 53964 strings out of 476775
- 1299863 string characters out of 5808212
- 2233847 words of memory out of 5000000
- 73366 multiletter control sequences out of 15000+600000
- 520202 words of font info for 73 fonts, out of 8000000 for 9000
+ 54016 strings out of 476775
+ 1300861 string characters out of 5808212
+ 2234159 words of memory out of 5000000
+ 73408 multiletter control sequences out of 15000+600000
+ 520210 words of font info for 74 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  115i,11n,118p,1580b,848s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on hw2.pdf (5 pages).
+Output written on hw2.pdf (8 pages).

@@ -60,6 +60,10 @@
 \usepackage{imakeidx}
 \makeindex
 
+%---PLOTS---
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
 %---BIBLIOGRAPHY---
 
 \usepackage[backend=biber, style=alphabetic]{biblatex}
@@ -133,7 +137,7 @@ so we get
 \frac{2}{\prs{1-\theta}^2} - \frac{1}{\prs{1-\theta}^2} = \frac{1}{\prs{1 - \theta}^2} \text{.}
 \end{align*}
 
-\item We shall now compute $\mbb{E}_{\tau \sim \pi_\theta}\brs{R\prs{\tau}}$ directly and verify that \[\nabla \mbb{E}_{\tau \sim \pi_\theta}\brs{R\prs{\tau}} = \frac{1}{1 - \theta}^2 \text{.}\]
+\item We shall now compute $\mbb{E}_{\tau \sim \pi_\theta}\brs{R\prs{\tau}}$ directly and verify that \[\nabla \mbb{E}_{\tau \sim \pi_\theta}\brs{R\prs{\tau}} = \frac{1}{\prs{1 - \theta}^2} \text{.}\]
 We have
 \begin{align*}
 \mbb{E}_{\tau \sim \pi_\theta}\brs{R\prs{\tau}} &= \sum_{i = 1}^{\infty} p_{\theta}\prs{\tau_i} R\prs{\tau_i}
@@ -269,7 +273,139 @@ to $0$. We get that the variance is minimal for $\theta \approx 0.10988$ and goe
 \item
 \begin{enumerate}[label=(\alph*)]
 \item
+An advantage estimator is a function $A$, possibly dependent on time, which gives the following estimate:
+\begin{align*}
+\nabla J\prs{\theta} \approx \mbb{E}_{\tau \sim p_\theta\prs{\tau}}\brs{\sum_{t=1}^{\infty} \nabla_{\theta} \log \pi_\theta \prs{a_{i,t} \mid s_{i,t}} A_t\prs{\tau}} \text{.}
+\end{align*}
+We consider \[A_t\prs{\tau} = \sum_{t' = t}^{\infty} r\prs{s_{i,t'}, a_{i,t'}}\]
+which is the \emph{return-to-go} advantage estimator.
 
+We see that for any $t \in \mbb{N}_+$,
+\begin{align*}
+A_t\prs{\tau_i} &= \sum_{t'=t}^i r\prs{s_{i,t'} \mid a_{i,t'}} = \sum_{t' = t}^{i-1} 1 = i-1-\prs{t-1} = i-t \text{.}
+\end{align*}
+Hence
+\begin{align*}
+\mbb{E}_{\tau \sim p_\theta\prs{\tau}}\brs{\sum_{t=1}^{\infty} \nabla_{\theta} \log \pi_\theta \prs{a_{i,t} \mid s_{i,t}} A_t\prs{\tau}} &=
+\sum_{i=1}^{\infty} p_\theta\prs{\tau_i} \brs{\sum_{t = 1}^{i-1} \nabla_\theta \log\prs{\theta} \cdot \prs{i-t}}
+\\&=
+\sum_{i=1}^{\infty} \theta^{i-1} \prs{1-\theta} \prs{\sum_{t=1}^{i-1} \frac{i-t}{\theta}}
+\\&=
+\sum_{i=1}^{\infty} \theta^{i-2} \prs{1-\theta} \prs{i\prs{i-1} - \sum_{t=1}^{i-1} t}
+\\&=
+\sum_{i=1}^{\infty} \theta^{i-2} \prs{1-\theta} \prs{i\prs{i-1} - \frac{i\prs{i-1}}{2}}
+\\&=
+\frac{1}{2} \sum_{i=1}^{\infty} \theta^{i-2} \prs{1-\theta} i \prs{i-1} \\&=
+\frac{1}{2} \prs{\sum_{i=1}^{\infty} \theta^{i-2} i^2 - \sum_{i=1}^{\infty} \theta^{i-2} i - \sum_{i=1}^{\infty} \theta^{i-1} i^2 + \sum_{i=1}^{\infty} \theta^{i-1} i} \text{.}
+\end{align*}
+Write
+\begin{align*}
+S'_1 &\coloneqq \sum_{i=1}^{\infty} \theta^{i-2} i^2 \\
+S'_2 &\coloneqq \sum_{i=1}^{\infty} \theta^{i-2} i \\
+S'_3 &\coloneqq \sum_{i=1}^{\infty} \theta^{i-1} i^2 \\
+S'_4 &\coloneqq \sum_{i=1}^{\infty} \theta^{i-1} i \text{.}
+\end{align*}
+We calculated in the previous part that
+\begin{align*}
+S'_4 = \frac{1}{\prs{1-\theta}^2} \text{.}
+\end{align*}
+Then
+\begin{align*}
+S'_2 = \sum_{i=1}^{\infty} \theta^{i-2} i = \theta^{-1} \sum_{i=1}^{\infty} \theta^{i-1} i = \theta^{-1} S'_4 = \frac{1}{\theta \prs{1-\theta}^2} \text{.} 
+\end{align*}
+We also showed that
+\begin{align*}
+\sum_{i=1}^\infty i^2 \theta^i = \frac{\theta^2 + \theta}{\prs{1-\theta}^3} \text{,}
+\end{align*}
+so similarly we get
+\begin{align*}
+S'_3 = \frac{\theta + 1}{\prs{1-\theta}^3}
+\end{align*}
+and
+\begin{align*}
+S'_1 = \frac{\theta + 1}{\theta \prs{1-\theta}^3} \text{.}
+\end{align*}
+Finally, we get
+\begin{align*}
+\mbb{E}_{\tau \sim p_\theta\prs{\tau}}\brs{\sum_{t=1}^{\infty} \nabla_{\theta} \log \pi_\theta \prs{a_{i,t} \mid s_{i,t}}}
+&=
+\frac{1}{2} \prs{S'_1 - S'_2 - S'_3 + S'_4}
+\\&=
+\frac{1}{2} \cdot \frac{\prs{\theta+1} - \prs{1-\theta} - \prs{\theta^2 + \theta} + \theta\prs{1-\theta}}{\theta \prs{1-\theta}^3}
+\frac{1}{2} \cdot \frac{-2 \theta^2 + 2\theta}{\theta \prs{1-\theta}^3}
+\\&=
+\frac{\theta\prs{1-\theta}}{\theta \prs{1-\theta}^3}
+\\&=
+\frac{1}{\prs{1-\theta}^2}
+\\&=
+\nabla J\prs{\theta} \text{.}
+\end{align*}
+Hence our advantage estimator is unbiased in the sense that in expectation it has the same value
+\[\mbb{E}_{\tau \sim p_\theta\prs{\tau}}\brs{\sum_{t=1}^{\infty} \nabla_{\theta} \log \pi_\theta \prs{a_{i,t} \mid s_{i,t}} A_t\prs{\tau}}\]
+as the true value of the gradient, $\nabla J\prs{\theta}$.
+
+\item
+We now compute the variance of the return-to-go policy variant. From what we've learnt in the lecture, return-to-go is used to reduce variance, so we expect a lower variance than the one we got in part 2.
+
+We have
+\begin{align*}
+\Var_{\tau \sim p_\theta\prs{\tau}}\brs{\sum_{t=1}^{\infty} \nabla_{\theta} \log \pi_\theta \prs{a_{i,t} \mid s_{i,t}} A_t\prs{\tau}}
+&=
+\mbb{E}_{\tau \sim p_\theta\prs{\tau}}\brs{\prs{\sum_{t=1}^{\infty} \nabla_{\theta} \log \pi_\theta \prs{a_{i,t} \mid s_{i,t}} A_t\prs{\tau}}^2}
+\\&-
+\mbb{E}_{\tau \sim p_\theta\prs{\tau}}\brs{\sum_{t=1}^{\infty} \nabla_{\theta} \log \pi_\theta \prs{a_{i,t} \mid s_{i,t}} A_t\prs{\tau}}^2
+\\&= \mbb{E}_{\tau \sim p_\theta\prs{\tau}}\brs{\prs{\sum_{t=1}^{\infty} \nabla_{\theta} \log \pi_\theta \prs{a_{i,t} \mid s_{i,t}} A_t\prs{\tau}}^2} - \frac{1}{\prs{1-\theta}^4} \text{.}
+\end{align*}
+
+Now, using our computations from part 3(a) we get
+\begin{align*}
+\mbb{E}_{\tau \sim p_\theta\prs{\tau}}\brs{\prs{\sum_{t=1}^{\infty} \nabla_{\theta} \log \pi_\theta \prs{a_{i,t} \mid s_{i,t}} A_t\prs{\tau}}^2} &= \sum_{i=1}^{\infty} p_\theta\prs{\tau_i} \prs{\sum_{t=1}^{i-1} \nabla_\theta \log\prs{\theta} \cdot \prs{i-t}}^2
+\\&=
+\frac{1}{4} \sum_{i=1}^{\infty} \theta^{i-3} \prs{1-\theta} i^2 \prs{i-1}^2
+\\&=
+\frac{1 - \theta}{4 \theta^3} \sum_{i=1}^\infty \theta^i i^2 \prs{i^2 -2i + 1}
+\\&=
+\frac{1 - \theta}{4 \theta^3} \sum_{i=1}^\infty \theta^i \prs{i^4 -2i^3 + i^2}
+\\&=
+\frac{1 - \theta}{4 \theta^3} \prs{\sum_{i=1}^{\infty} \theta^i i^4 -2 \sum_{i=1}^{\infty} \theta^i i^3 + \sum_{i=1}^\infty \theta^i i^2}
+\\&=
+\frac{1 - \theta}{4 \theta^3} \prs{\frac{\theta^4 + 11 \theta^3 + 11 \theta^2 + \theta}{\prs{1-\theta}^5} - 2 \cdot \frac{\theta^3 + 4\theta^2 + \theta}{\prs{1-\theta}^4} + \frac{\theta^2 + \theta}{\prs{1-\theta}^3}}
+\\&=
+\frac{1 - \theta}{4 \theta^3} \cdot \frac{4 \theta^2 \prs{\theta^2 + 4\theta + 1}}{\prs{1 - \theta}^5}
+\\&=
+\frac{\theta^2 + 4 \theta + 1}{\theta \prs{1-\theta}^4}
+\end{align*}
+where the second-to-last equation is from calculations in part 2.
+Hence
+\begin{align*}
+\Var_{\tau \sim p_\theta\prs{\tau}}\brs{\sum_{t=1}^{\infty} \nabla_{\theta} \log \pi_\theta \prs{a_{i,t} \mid s_{i,t}} A_t\prs{\tau}} &=
+\frac{\theta^2 + 4\theta + 1}{\theta \prs{1-\theta}^4} - \frac{1}{\prs{1-\theta}^4} = \frac{\theta^2 + 3\theta + 1}{\theta \prs{1-\theta}^4} \text{.}
+\end{align*}
+In \Cref{fig:variance} we plot the variance before and after using return-to-go, and in \Cref{fig:variance-diff} we plot the reduction in variance gained by using return-to-go, which we notice is non-negative for all $\theta$.
+
+\begin{figure}[h]
+\caption{The variance, depending on $\theta$, of the policy gradient without return-to-go (in blue) and with return to go (in orange).}
+\label{fig:variance}
+\centering
+\includegraphics[width=8cm]{Figure_1}
+\end{figure}
+
+\begin{figure}[h]
+\caption{The reduction in variance gained by using return-to-go, as a function of $\theta$.}
+\label{fig:variance-diff}
+\centering
+\includegraphics[width=8cm]{Figure_2}
+\end{figure}
+
+\end{enumerate}
+
+\item
+\begin{enumerate}[label=(\alph*)]
+\item
+We have
+\begin{align*}
+\nabla_\theta J\prs{\theta} = \mbb{E}_{\tau \sim p_{\theta'}\prs{\tau}}\brs{\frac{\prod_{t=1}^H \pi_\theta\prs{a_t \mid s_t}}{\prod_{t=1}^H\pi_{\theta'}\prs{a_t \mid s_t}} \nabla_\theta \log p_\theta\prs{\tau} R\prs{\tau}}
+\end{align*}
 \item
 
 \end{enumerate}
