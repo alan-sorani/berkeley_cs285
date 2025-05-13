@@ -404,11 +404,33 @@ In \Cref{fig:variance} we plot the variance before and after using return-to-go,
 \item
 We have
 \begin{align*}
-\nabla_\theta J\prs{\theta} = \mbb{E}_{\tau \sim p_{\theta'}\prs{\tau}}\brs{\frac{\prod_{t=1}^H \pi_\theta\prs{a_t \mid s_t}}{\prod_{t=1}^H\pi_{\theta'}\prs{a_t \mid s_t}} \nabla_\theta \log p_\theta\prs{\tau} R\prs{\tau}}
+\nabla_\theta J\prs{\theta} = \mbb{E}_{\tau \sim p_{\theta'}\prs{\tau}}\brs{\frac{\prod_{t=1}^H \pi_\theta\prs{a_t \mid s_t}}{\prod_{t=1}^H\pi_{\theta'}\prs{a_t \mid s_t}} \nabla_\theta \log p_\theta\prs{\tau} R\prs{\tau}} \text{.}
+\end{align*}
+Let $\tau_0 = \prs{s_1, \ldots, s_H}$. Because $R = \chi_{\tau_0}$, we get
+\begin{align*}
+\nabla_\theta J\prs{\theta} &= p_{\theta'}\prs{\tau_0} \frac{p_{\theta}\prs{\tau_0}}{p_{\theta'}\prs{\tau_0}} \nabla_\theta \log p_\theta\prs{\tau_0}
+\\&=
+p_\theta\prs{\tau_0} \nabla_\theta \log p_\theta\prs{\tau_0}
+\\&=
+\nabla_\theta p_\theta\prs{\tau_0}
+\\&=
+\nabla_\theta \prod_{t=1}^{H-1} p_\theta\prs{a_1 \mid s_t} \text{.}
 \end{align*}
 \item
-
+We have
+\begin{align*}
+\Var_{\tau \sim p_{\theta'}\prs{\tau}}\brs{\frac{\prod_{t=1}^H \pi_\theta\prs{a_t \mid s_t}}{\prod_{t=1}^H\pi_{\theta'}\prs{a_t \mid s_t}} \nabla_\theta \log p_\theta\prs{\tau} R\prs{\tau}}
+&=
+\mbb{E}_{\tau \sim p_{\theta'}\prs{\tau}}\brs{\prs{\frac{\prod_{t=1}^H \pi_\theta\prs{a_t \mid s_t}}{\prod_{t=1}^H\pi_{\theta'}\prs{a_t \mid s_t}} \nabla_\theta \log p_\theta\prs{\tau} R\prs{\tau}}^2}
+\\&
+-\mbb{E}_{\tau \sim p_{\theta'}\prs{\tau}}\brs{\frac{\prod_{t=1}^H \pi_\theta\prs{a_t \mid s_t}}{\prod_{t=1}^H\pi_{\theta'}\prs{a_t \mid s_t}} \nabla_\theta \log p_\theta\prs{\tau} R\prs{\tau}}^2
+\\&=
+p_{\theta'} \prs{\frac{p_\theta\prs{\tau_0}}{p_{\theta'}\prs{\tau_0}} \nabla_\theta \log p_\theta\prs{\tau_0}}^2 - \prs{\nabla_\theta \prod_{t=1}^{H-1} p_\theta\prs{a_1 \mid s_t}}^2
+\\&=
+\frac{p_\theta\prs{\tau_0}^2}{p_{\theta'}\prs{\tau_0}} \prs{\nabla_\theta \log p_\theta\prs{\tau_0}}^2 - \prs{\nabla_\theta \prod_{t=1}^{H-1} p_\theta\prs{a_1 \mid s_t}}^2
+\end{align*}
 \end{enumerate}
+Now, $p_\theta\prs{\tau_0}$ grows exponentially in $H$ and therefore so does its derivative. Then $\log p_\theta$ is a linear term in $H$ so its derivative is constant. We get that both of the summands approach zero, as the base of the exponent is smaller than $1$, and so the variance goes to $0$ as $H \rightarrow \infty$.
 \end{enumerate}
 
 \printbibliography
