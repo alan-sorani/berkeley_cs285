@@ -1,0 +1,133 @@
+\documentclass[10pt]{article}
+
+%---GEOMETRY
+
+\usepackage{geometry}
+   \geometry{verbose,tmargin=0.75in,bmargin=0.75in,%
+     lmargin=0.7in,rmargin=0.4in,headheight=0.25in,%
+     headsep=0.2in,footskip=0.4in}%
+
+%---COMMENTS---
+\usepackage{comment}
+
+%---CODE OUTPUT---
+\usepackage{listings}
+\lstset
+{ %Formatting for code in appendix
+    language=Matlab,
+    basicstyle=\footnotesize,
+    numbers=left,
+    stepnumber=1,
+    showstringspaces=false,
+    tabsize=4,
+    breaklines=true,
+    breakatwhitespace=false,
+    escapeinside={(*}{*)}
+}
+
+\newcommand{\codeword}[1]{\texttt{#1}}
+
+%---HYPERLINKS---
+
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all     %set to all if you want both sections and subsections linked
+}
+
+\begin{comment}
+    citecolor=stycitecolor,
+    filecolor=styfilecolor,
+    linkcolor=stylinkcolor,
+    urlcolor=styurlcolor
+\end{comment}
+
+%---MATHS PACKAGES---
+
+\usepackage{math}
+
+%---THEOREMS
+
+\usepackage{altthms}
+
+\theoremstyle{definition}
+
+\renewtheorem{exercise}{Exercise}[section]
+\renewcommand*{\theexercise}{\thesection-\arabic{exercise}}
+
+%---INDEX---
+
+\usepackage{imakeidx}
+\makeindex
+
+%---PLOTS---
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+%---BIBLIOGRAPHY---
+
+\usepackage[backend=biber, style=alphabetic]{biblatex}
+\addbibresource{bibliography.bib}
+
+%---ENUMERATION---
+
+\usepackage{enumitem}
+
+%---TITLE---
+
+\title{CS285: Deep Reinforcement Learning \\ Assignment 3 \\ Written Report}
+\author{Alan Sorani}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Multistep Q-Learning}
+
+\subsection{TD-Learning Bias}
+
+Assume that $\hat{Q}$ is a noisy unbiased estimate for $Q$. Then the Bellman backup $\mathcal{B}\hat{Q} \coloneqq r\prs{s,a} + \gamma \max_{a'} \hat{Q}\prs{s', a'}$ is a \textbf{biased estimate} of $\mathcal{B}Q$. We have
+\begin{align*}
+\mathbb{E}_{\tau \sim p_\theta}\brs{\mathcal{B}\hat{Q}}
+&=
+\mathbb{E}_{\tau \sim p_\theta}\brs{r\prs{s,a} + \gamma \max_{a'} \hat{Q}\prs{s', a'}}
+\\&=
+\mathbb{E}_{\tau \sim p_\theta}\brs{r\prs{s,a}} + \gamma \mathbb{E}_{\tau \sim p_\theta}\brs{\max_{a'} \hat{Q}\prs{s', a'}} \text{,}
+\end{align*}
+and similarly
+\begin{align*}
+\mathbb{E}_{\tau \sim p_\theta}\brs{\mathcal{B}{Q}}
+&=
+\mathbb{E}_{\tau \sim p_\theta}\brs{r\prs{s,a}} + \gamma \mathbb{E}_{\tau \sim p_\theta}\brs{\max_{a'} Q\prs{s', a'}} \text{,}
+\end{align*}
+so $\mathcal{B}\hat{Q}$ is an unbiased estimate of $\mathcal{B}Q$ if and only if
+\[\mathbb{E}_{\tau \sim p_\theta}\brs{\max_{a'} \hat{Q}\prs{s', a'}} = \mathbb{E}_{\tau \sim p_\theta}\brs{\max_{a'} Q\prs{s', a'}} \text{.}\]
+
+This is not true. Consider an MDP with the action space $\mathcal{A} = \mbb{R}$. Then we can have, $Q\prs{s,\cdot} = 0$ and $Q\prs{s,\cdot} \sim \mathcal{N}\prs{0,1}$ where the latter is a Gaussian distribution of mean $0$ and variance $1$.
+Then, for every state $s$,
+\[\mathbb{E}_{a \in \mathcal{A}}\brs{\hat{Q}\prs{s,a}} = 0 = \mathbb{E}_{a \in \mathcal{A}}\brs{Q\prs{s,a}}\]
+so $\hat{Q}$ is an unbiased estimator of $Q$, but
+\begin{align*}
+\mathbb{E}_{\tau \sim p_\theta}\brs{\max_{a'} \hat{Q}\prs{s', a'}} > 0 \text{,}
+\mathbb{E}_{\tau \sim p_\theta}\brs{\max_{a'} Q\prs{s', a'}} = \mathbb{E}_{\tau \sim p_\theta}\brs{0} = 0 \text{,}
+\end{align*}
+as the expected value of the maximum of samples from Gaussian distribution is clearly positive. We get that $\mathcal{B}\hat{Q}$ is not an unbiased estimate for $\mathcal{B}Q$.
+
+\subsection{Tabular Learning}
+
+\subsection{Variance of Q Estimates}
+
+For $N = 1$, the target value
+\[y_{i,t} = r_{i,t} + \gamma^N \max_{a_{i, t+1}} Q_{\phi_k}\prs{s_{i,t+1}, a_{i,t+1}}\]
+is an approximation for $Q\prs{s_{i,t}, a_{i,t}}$. As we increase $N$, the target value takes more actions which do not maximize the $Q$-value, before eventually maximizing the $Q$-value on the $N$\textsuperscript{th} step.
+We expect therefore that as $N$ increases, the model would more closely fit the data, which would result in increased variance. Therefore, the minimal variance would be given when $N=1$ and the maximal one as $N \to \infty$.
+
+\subsection{Function Approximation}
+
+\subsection{Multistep Importance Sampling}
+
+\printbibliography
+\printindex
+
+\end{document}
